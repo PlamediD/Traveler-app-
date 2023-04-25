@@ -28,7 +28,7 @@ class Flight {
 class Hotel{
   DateTime checkIn;
   DateTime checkOut;
-  int roomNum;
+  String roomNum;
 
   Hotel({
     required this.checkIn,
