@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import 'TripProvidertest.dart';
 import 'form_buttons.dart';
+import 'object_models.dart';
 class Forms extends StatefulWidget {
   const Forms({Key? key}) : super(key: key);
 
@@ -17,10 +20,12 @@ class _FormsState extends State<Forms> {
   TextEditingController _arrival = TextEditingController();
   TextEditingController _flightNum = TextEditingController();
   TextEditingController _roomNum = TextEditingController();
+  TextEditingController _budget = TextEditingController();
   int currIndex = -1;
 
   @override
   Widget build(BuildContext context) {
+    final tripProvider = Provider.of<TripProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -83,6 +88,42 @@ class _FormsState extends State<Forms> {
                   child: EndTimeButton(startTime: _checkIn, endTime: _checkOut),
                 ),
                 StringInputButton(textInput:_roomNum, labelText: "Room Number",),
+                StringInputButton(textInput:_budget, labelText: "Budget",),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ElevatedButton(onPressed:() {
+                      Trip newTrip = Trip(
+                        start: _flightStartTime!,
+                        end: _flightEndTime!,
+                        destination: _Destination.text,
+                        flight: Flight(
+                          departure: _departure.text,
+                          arrival: _arrival.text,
+                          flightNum: _flightNum.text,
+                        ),
+                        hotel: Hotel(
+                          checkIn: _checkIn!,
+                          checkOut: _checkOut!,
+                          roomNum: int.parse(_roomNum.text),
+                        ),
+                        budget: int.parse(_budget.text),
+                      );
+
+                      // Add the new trip to the provider.
+                      tripProvider.addTrip(newTrip, start: _flightStartTime!,
+                          end: _flightEndTime!,
+                          destination: _Destination.text,
+                          flight: newTrip.flight,
+                          hotel: newTrip.hotel,
+                          budget: int.parse(_budget.text));
+                      print('Trip was added. Have fun in ${_Destination.text}');
+
+                      // Close the form and go back to the previous screen.
+                      Navigator.pop(context);
+                    }, child: Text('Submit'))
+                  ],
+                ),
               ],
             ),
           ),
@@ -114,4 +155,3 @@ class FlightInfo extends StatelessWidget {
     );
   }
 }
-

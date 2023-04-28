@@ -23,12 +23,24 @@
 // It includes the trip registration feature.
 // It has a little + icon on the bottom right that they user can click to register a new trip.
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'TripProvidertest.dart';
 import 'object_models.dart';
 import 'trip_list.dart';
 import 'forms.dart';
 
+// void main() {
+//   runApp(MyApp());
+// }
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TripProvider>(create: (_) => TripProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
