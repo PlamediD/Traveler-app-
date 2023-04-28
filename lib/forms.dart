@@ -11,10 +11,7 @@ class Forms extends StatefulWidget {
 
 class _FormsState extends State<Forms> {
   final formKey = GlobalKey<FormState>();
-  DateTime? _flightStartTime;
-  DateTime? _flightEndTime;
-  DateTime? _checkIn;
-  DateTime? _checkOut;
+  DateTime? _flightStartTime, _flightEndTime, _checkIn,_checkOut;
   TextEditingController _Destination = TextEditingController();
   TextEditingController _departure = TextEditingController();
   TextEditingController _arrival = TextEditingController();
@@ -36,12 +33,9 @@ class _FormsState extends State<Forms> {
             key:formKey,
             child:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  "Trip Details:",
-                  style: TextStyle(fontSize: 25),
-                ),
-                SizedBox(height:20),
+                Text("Trip Details:", style: TextStyle(fontSize: 25),),
                 InkWell(
                   onTap: () async{
                     DateTime? startTime = await pickDateTime(context);
@@ -52,7 +46,6 @@ class _FormsState extends State<Forms> {
                   },
                   child: StartTimeButton(startTime: _flightStartTime),
                 ),
-                SizedBox(height:20),
                 InkWell(
                   onTap: () async{
                     DateTime? endTime = await pickDateTime(context);
@@ -63,25 +56,12 @@ class _FormsState extends State<Forms> {
                   },
                   child: EndTimeButton(startTime: _flightStartTime, endTime: _flightEndTime),
                 ),
-                SizedBox(height:20),
                 StringInputButton(textInput:_Destination, labelText: "Destination",),
-                SizedBox(height:20),
-                Text(
-                  "Flight Info:",
-                  style: TextStyle(fontSize: 25),
-                ),
-                SizedBox(height:20),
-                StringInputButton(textInput:_departure, labelText: "Departure",),
-                SizedBox(height:20),
-                StringInputButton(textInput:_arrival, labelText: "Arrival",),
-                SizedBox(height:20),
-                StringInputButton(textInput:_flightNum, labelText: "Flight Number",),
-                SizedBox(height:20),
+                FlightInfo(departure: _departure, arrival: _arrival, flightNum: _flightNum),
                 Text(
                   "Hotel Info:",
                   style: TextStyle(fontSize: 25),
                 ),
-                SizedBox(height:20),
                 InkWell(
                   onTap: () async{
                     DateTime? startTime = await pickDateTime(context);
@@ -92,7 +72,6 @@ class _FormsState extends State<Forms> {
                   },
                   child: StartTimeButton(startTime: _checkIn),
                 ),
-                SizedBox(height:20),
                 InkWell(
                   onTap: () async{
                     DateTime? endTime = await pickDateTime(context);
@@ -103,9 +82,7 @@ class _FormsState extends State<Forms> {
                   },
                   child: EndTimeButton(startTime: _checkIn, endTime: _checkOut),
                 ),
-                SizedBox(height:20),
                 StringInputButton(textInput:_roomNum, labelText: "Room Number",),
-                SizedBox(height:20),
               ],
             ),
           ),
@@ -114,3 +91,27 @@ class _FormsState extends State<Forms> {
     );
   }
 }
+
+class FlightInfo extends StatelessWidget {
+  const FlightInfo({super.key, required this.departure, required this.arrival, required this.flightNum});
+  final TextEditingController departure;
+  final TextEditingController arrival;
+  final TextEditingController flightNum;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          "Flight Info:",
+          style: TextStyle(fontSize: 25),
+        ),
+        StringInputButton(textInput: departure, labelText: "Departure",),
+        StringInputButton(textInput: arrival, labelText: "Arrival",),
+        StringInputButton(textInput: flightNum, labelText: "Flight Number",),
+      ],
+    );
+  }
+}
+

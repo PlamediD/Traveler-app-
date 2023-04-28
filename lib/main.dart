@@ -1,27 +1,27 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+//
+//
+// import 'forms.dart';
+// void main() {
+//   runApp(const TravelApp());
+// }
+//
+// class TravelApp extends StatelessWidget {
+//   const TravelApp({super.key, this.startTime});
+//   final DateTime? startTime;
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Travel App',
+//       home:Forms()
+//     );
+//   }
+// }
 
-
-import 'forms.dart';
-void main() {
-  runApp(const TravelApp());
-}
-
-class TravelApp extends StatelessWidget {
-  const TravelApp({super.key, this.startTime});
-  final DateTime? startTime;
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Travel App',
-      home:Forms()
-    );
-  }
-}
-
-/* Main written by Plamedi 
-It includes the trip registration feature. 
-It has a little + icon on the bottom right that they user can click to register a new trip. 
+//  Main written by Plamedi
+// It includes the trip registration feature.
+// It has a little + icon on the bottom right that they user can click to register a new trip.
 import 'package:flutter/material.dart';
 import 'object_models.dart';
 import 'trip_list.dart';
@@ -129,4 +129,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-*/
