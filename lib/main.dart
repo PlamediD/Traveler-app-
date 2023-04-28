@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: TripList(trips: _trips),
+        child: TripList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTrip,

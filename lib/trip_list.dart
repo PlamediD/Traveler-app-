@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'TripProvidertest.dart';
 import 'object_models.dart';
 import 'package:intl/intl.dart';
 
 class TripList extends StatelessWidget {
-  final List<Trip> trips;
-
-  TripList({required this.trips});
+  // final List<Trip> trips;
+  // TripList({required this.trips});
 
   @override
   Widget build(BuildContext context) {
+    final tripProvider = Provider.of<TripProvider>(context);
+    final trips = tripProvider.trips;
     return ListView.builder(
       itemCount: trips.length,
       itemBuilder: (BuildContext context, int index) {
@@ -70,3 +73,31 @@ class TripList extends StatelessWidget {
     );
   }
 }
+// This was for testing purposes
+// class TripCard extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final tripProvider = Provider.of<TripProvider>(context);
+//     final trips = tripProvider.trips;
+//
+//     return ListView.builder(
+//       itemCount: trips.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return Card(
+//           child: Column(
+//             children: [
+//               Text(trips[index].destination),
+//               Text(trips[index].start.toString()),
+//               Text(trips[index].end.toString()),
+//               Text(trips[index].flight.departure),
+//               Text(trips[index].flight.arrival),
+//               Text(trips[index].flight.flightNum),
+//               Text(trips[index].hotel.roomNum.toString()),
+//               Text(trips[index].budget.toString()),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
