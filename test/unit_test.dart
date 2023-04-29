@@ -2,10 +2,12 @@
 // Casey Nguyen
 // PURPOSE: This file runs unit tests for our TravelApp.
 // TESTING:
-// - Time logic
+// - Adding a small unit test.
 //
 // HISTORY
 // 4.29.2023: Tests outlined based on current master.
+// File will be bare since we are still fleshing out logic. Refer to
+// widget tests for more thorough testing.
 
 // Imports
 import 'package:flutter_test/flutter_test.dart';
