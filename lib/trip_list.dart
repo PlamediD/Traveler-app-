@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'TripProvidertest.dart';
 import 'object_models.dart';
 import 'package:intl/intl.dart';
+import 'ModifyDialog.dart';
+
 
 class TripList extends StatelessWidget {
   // final List<Trip> trips;
@@ -30,6 +32,13 @@ class TripList extends StatelessWidget {
                   },
                   icon: const Icon(Icons.flight)
               ),
+              IconButton(
+                onPressed: () {
+                  _showModifyDialog(context, trip);
+                },
+                icon: Icon(Icons.edit),
+              ),
+
               IconButton(
                 onPressed: (){ tripProvider.removeTrip(index);},
                 icon: const Icon(Icons.delete_forever),
@@ -81,6 +90,15 @@ class TripList extends StatelessWidget {
       },
     );
   }
+  void _showModifyDialog(BuildContext context, Trip trip) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ModifyDialog(trip: trip);
+      },
+    );
+  }
+
 }
 // This was for testing purposes
 // class TripCard extends StatelessWidget {
