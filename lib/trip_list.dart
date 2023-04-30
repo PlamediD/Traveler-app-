@@ -10,7 +10,7 @@ class TripList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tripProvider = Provider.of<TripProvider>(context);
+    final tripProvider = context.watch<TripProvider>();
     final trips = tripProvider.trips;
     return ListView.builder(
       itemCount: trips.length,
@@ -21,11 +21,20 @@ class TripList extends StatelessWidget {
         return ListTile(
           title: Text(trip.destination),
           subtitle: Text('$startDateFormatted - $endDateFormatted'),
-          trailing: ElevatedButton(
-            child: Text('View More'),
-            onPressed: () {
-              _showTripDetails(context, trip);
-            },
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              IconButton(
+                  onPressed: () {
+                    _showTripDetails(context, trip);
+                  },
+                  icon: const Icon(Icons.flight)
+              ),
+              IconButton(
+                onPressed: (){ tripProvider.removeTrip(index);},
+                icon: const Icon(Icons.delete_forever),
+              )
+            ],
           ),
         );
       },

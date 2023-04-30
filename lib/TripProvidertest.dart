@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'object_models.dart';
 
 class TripProvider with ChangeNotifier {
-  List<Trip> _trips = [];
+  final List<Trip> _trips = [];
 
   List<Trip> get trips => _trips;
 
@@ -25,4 +25,12 @@ class TripProvider with ChangeNotifier {
     _trips.add(trip);
     notifyListeners();
   }
+
+  void removeTrip(int index){
+    _trips.removeAt(index);
+    notifyListeners();
+  }
+
+  int get tripsLength => _trips.length;
+
 }

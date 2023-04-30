@@ -23,9 +23,9 @@
 // It includes the trip registration feature.
 // It has a little + icon on the bottom right that they user can click to register a new trip.
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'TripProvidertest.dart';
-import 'object_models.dart';
 import 'trip_list.dart';
 import 'forms.dart';
 
@@ -33,27 +33,37 @@ import 'forms.dart';
 //   runApp(MyApp());
 // }
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<TripProvider>(create: (_) => TripProvider()),
-      ],
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
+final router = GoRouter(
+  initialLocation: '/home',
+  routes: [
+    GoRoute(
+      path: '/home',
+      name: 'home',
+      builder: (context, _) => MyHomePage(title: 'Trip Planner',),
+    )
+  ],
+);
+
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Trip Planner',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return ChangeNotifierProvider(
+      create: (context) => TripProvider(),
+      child: MaterialApp.router(
+        title: 'Trip Planner',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        routerConfig: router,
       ),
-      home: MyHomePage(title: 'My Trips'),
     );
   }
 }
@@ -68,59 +78,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Trip> _trips = [
-    Trip(
-        start: DateTime.now(),
-        end: DateTime.now().add(Duration(days: 7)),
-        destination: 'New York',
-        flight: Flight(
-            departure: 'Boston',
-            arrival: 'New York',
-            flightNum: 'AA1234'),
-        hotel: Hotel(
-            checkIn: DateTime.now(),
-            checkOut: DateTime.now().add(Duration(days: 7)),
-            roomNum: 1),
-        budget: 2000),
-    Trip(
-        start: DateTime.now(),
-        end: DateTime.now().add(Duration(days: 10)),
-        destination: 'San Francisco',
-        flight: Flight(
-            departure: 'Boston',
-            arrival: 'San Francisco',
-            flightNum: 'UA5678'),
-        hotel: Hotel(
-            checkIn: DateTime.now(),
-            checkOut: DateTime.now().add(Duration(days: 10)),
-            roomNum: 2),
-        budget: 3000),
-    Trip(
-        start: DateTime.now(),
-        end: DateTime.now().add(Duration(days: 14)),
-        destination: 'London',
-        flight: Flight(
-            departure: 'Boston',
-            arrival: 'London',
-            flightNum: 'BA5678'),
-        hotel: Hotel(
-            checkIn: DateTime.now(),
-            checkOut: DateTime.now().add(Duration(days: 14)),
-            roomNum: 2),
-        budget: 5000),
-  ];
 
   void _addTrip() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Forms()),
-    ).then((newTrip) {
-      if (newTrip != null) {
-        setState(() {
-          _trips.add(newTrip);
-        });
-      }
-    });
+    );
   }
 
   @override
@@ -128,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
       ),
       body: Center(
         child: TripList(),
@@ -135,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _addTrip,
         tooltip: 'Add Trip',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
