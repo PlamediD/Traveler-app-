@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'object_models.dart';
+import 'package:provider/provider.dart';
 
 class TripProvider with ChangeNotifier {
   final List<Trip> _trips = [];
@@ -29,6 +30,26 @@ class TripProvider with ChangeNotifier {
   void removeTrip(int index){
     _trips.removeAt(index);
     notifyListeners();
+  }
+  void modifyHotel(Trip trip, DateTime newCheckInDate, DateTime newCheckOutDate) {
+    final hotel = trip.hotel;
+    final newHotel = Hotel(
+      checkIn: newCheckInDate ?? hotel.checkIn,
+      checkOut: newCheckOutDate ?? hotel.checkOut,
+      roomNum: hotel.roomNum,
+    );
+    final index = _trips.indexWhere((t) => t == trip);
+    if (index >= 0) {
+      _trips[index] = Trip(
+        start: trip.start,
+        end: trip.end,
+        destination: trip.destination,
+        flight: trip.flight,
+        hotel: newHotel,
+        budget: trip.budget,
+      );
+      notifyListeners();
+    }
   }
 
   int get tripsLength => _trips.length;
