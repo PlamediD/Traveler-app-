@@ -6,4 +6,4 @@ Team Members: Richard Ty, Plamedi Diakubama, Haonan Wang, Casey Nguyen
 
 ## Milestone 1
 
-NOTE: Casey worked with Henry (Haonan) on testing, so any committs I submit were from both of us.
+NOTE: Casey worked with Henry (Haonan) on testing, so any committs he submitted were from both of them.
