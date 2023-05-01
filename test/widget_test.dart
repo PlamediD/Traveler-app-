@@ -36,12 +36,37 @@ main(){
                  )
              )
          );
+         // Attempt to navigate to the next page.
          final nextPage = find.byIcon(Icons.add);
          await tester.tap(nextPage);
          await tester.pumpAndSettle();
+         // Expect to find the main details of the forms page.
          expect(find.text("Trip Details:"), findsOneWidget);
          expect(find.text("Flight Info:"), findsOneWidget);
          expect(find.text("Hotel Info:"), findsOneWidget);
+       });
+
+   // TEST: Ensure that the back button works
+   // EXPECT: Return to main page.
+   testWidgets("User should be able to go back to the first page",
+           (WidgetTester tester) async{
+         await tester.pumpWidget(
+             const MaterialApp(
+                 home: Scaffold(
+                     body: MyApp()
+                 )
+             )
+         );
+         // Navigate to the forms page.
+         final nextPage = find.byIcon(Icons.add);
+         await tester.tap(nextPage);
+         await tester.pumpAndSettle();
+         // Attempt to navigate backwards.
+         final backPage = find.byIcon(Icons.arrow_back);
+         await tester.tap(backPage);
+         await tester.pumpAndSettle();
+         // Expect to find the title of the app bar.
+         expect(find.text("Trip Planner"), findsOneWidget);
        });
 
    // TEST: Submitting with no input.
@@ -55,32 +80,45 @@ main(){
                  )
              )
          );
+         // Navigate to the forms page.
          final nextPage = find.byIcon(Icons.add);
          await tester.tap(nextPage);
          await tester.pumpAndSettle();
+         // Attempt to submit.
          final submit = find.text("Submit");
          await tester.tap(submit);
          await tester.pumpAndSettle();
+         // Expect to find the main details of the forms page.
          expect(find.text("Trip Details:"), findsOneWidget);
          expect(find.text("Flight Info:"), findsOneWidget);
          expect(find.text("Hotel Info:"), findsOneWidget);
        });
 
-   // TEST: Proper submission.
-   testWidgets("User should be able to add a date using calendar picker",
-   (WidgetTester tester) async{
-     await tester.pumpWidget(
-         const MaterialApp(
-             home: Scaffold(
-                 body: MyApp()
+   // TEST: Submitting with incomplete input.
+   // EXPECT: Remain on the forms page.
+   testWidgets("Submitting with no input should keep user on forms page",
+           (WidgetTester tester) async{
+         await tester.pumpWidget(
+             const MaterialApp(
+                 home: Scaffold(
+                     body: MyApp()
+                 )
              )
-         )
-     );
-     final nextPage = find.byIcon(Icons.add);
-     await tester.tap(nextPage);
-     await tester.pump();
-     await tester.pump();
-     // Let's enter all the strings first.
-
-   });
+         );
+         // Navigate to the forms page.
+         final nextPage = find.byIcon(Icons.add);
+         await tester.tap(nextPage);
+         await tester.pumpAndSettle();
+         // Insert some dummy info.
+         final textBox = find.byType(TextFormField).first;
+         await tester.enterText(textBox, "Seattle");
+         // Attempt to submit.
+         final submit = find.text("Submit");
+         await tester.tap(submit);
+         await tester.pumpAndSettle();
+         // Expect to find the main details of the forms page.
+         expect(find.text("Trip Details:"), findsOneWidget);
+         expect(find.text("Flight Info:"), findsOneWidget);
+         expect(find.text("Hotel Info:"), findsOneWidget);
+       });
 }
