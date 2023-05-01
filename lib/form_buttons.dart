@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class StartTimeButton extends StatelessWidget {
@@ -71,6 +72,27 @@ class StringInputButton extends StatelessWidget {
     );
   }
 }
+
+class NumInputButton extends StatelessWidget {
+  const NumInputButton({super.key,required this.textInput, required this.labelText});
+  final TextEditingController textInput;
+  final String labelText;
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: textInput,
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))],
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter only numbers';
+        }
+        return null;
+      },
+      decoration: InputDecoration(labelText: labelText),
+    );
+  }
+}
+
 Future<DateTime?> pickDateTime(BuildContext context) async {
   DateTime? pickedDate = await showDatePicker(
     context: context,
