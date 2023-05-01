@@ -7,8 +7,6 @@ import 'ModifyDialog.dart';
 
 
 class TripList extends StatelessWidget {
-  // final List<Trip> trips;
-  // TripList({required this.trips});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,8 @@ class TripList extends StatelessWidget {
                   onPressed: () {
                     _showTripDetails(context, trip);
                   },
-                  icon: const Icon(Icons.flight)
+                  icon: const Icon(Icons.flight),
+                  color: Colors.blueAccent,
               ),
               IconButton(
                 onPressed: () {
@@ -42,6 +41,7 @@ class TripList extends StatelessWidget {
               IconButton(
                 onPressed: (){ tripProvider.removeTrip(index);},
                 icon: const Icon(Icons.delete_forever),
+                color: Colors.redAccent,
               )
             ],
           ),

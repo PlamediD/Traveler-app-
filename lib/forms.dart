@@ -86,40 +86,43 @@ class _FormsState extends State<Forms> {
                   },
                   child: EndTimeButton(startTime: _checkIn, endTime: _checkOut),
                 ),
-                StringInputButton(textInput:_roomNum, labelText: "Room Number",),
-                StringInputButton(textInput:_budget, labelText: "Budget",),
+                NumInputButton(textInput:_roomNum, labelText: "Room Number",),
+                NumInputButton(textInput:_budget, labelText: "Budget",),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton(onPressed:() {
-                      Trip newTrip = Trip(
-                        start: _flightStartTime!,
-                        end: _flightEndTime!,
-                        destination: _Destination.text,
-                        flight: Flight(
-                          departure: _departure.text,
-                          arrival: _arrival.text,
-                          flightNum: _flightNum.text,
-                        ),
-                        hotel: Hotel(
-                          checkIn: _checkIn!,
-                          checkOut: _checkOut!,
-                          roomNum: int.parse(_roomNum.text),
-                        ),
-                        budget: int.parse(_budget.text),
-                      );
-
-                      // Add the new trip to the provider.
-                      tripProvider.addTrip(newTrip, start: _flightStartTime!,
+                      if(formKey.currentState!.validate()) {
+                        Trip newTrip = Trip(
+                          start: _flightStartTime!,
                           end: _flightEndTime!,
                           destination: _Destination.text,
-                          flight: newTrip.flight,
-                          hotel: newTrip.hotel,
-                          budget: int.parse(_budget.text));
-                      print('Trip was added. Have fun in ${_Destination.text}');
+                          flight: Flight(
+                            departure: _departure.text,
+                            arrival: _arrival.text,
+                            flightNum: _flightNum.text,
+                          ),
+                          hotel: Hotel(
+                            checkIn: _checkIn!,
+                            checkOut: _checkOut!,
+                            roomNum: int.parse(_roomNum.text),
+                          ),
+                          budget: int.parse(_budget.text),
+                        );
 
-                      // Close the form and go back to the previous screen.
-                      Navigator.pop(context);
+                        // Add the new trip to the provider.
+                        tripProvider.addTrip(newTrip, start: _flightStartTime!,
+                            end: _flightEndTime!,
+                            destination: _Destination.text,
+                            flight: newTrip.flight,
+                            hotel: newTrip.hotel,
+                            budget: int.parse(_budget.text));
+                        print('Trip was added. Have fun in ${_Destination
+                            .text}');
+
+                        // Close the form and go back to the previous screen.
+                        Navigator.pop(context);
+                      }
                     }, child: Text('Submit'))
                   ],
                 ),

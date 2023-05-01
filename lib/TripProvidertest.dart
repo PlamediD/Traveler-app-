@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'object_models.dart';
-import 'package:provider/provider.dart';
 
 class TripProvider with ChangeNotifier {
   final List<Trip> _trips = [];
@@ -34,8 +33,8 @@ class TripProvider with ChangeNotifier {
   void modifyHotel(Trip trip, DateTime newCheckInDate, DateTime newCheckOutDate) {
     final hotel = trip.hotel;
     final newHotel = Hotel(
-      checkIn: newCheckInDate ?? hotel.checkIn,
-      checkOut: newCheckOutDate ?? hotel.checkOut,
+      checkIn: newCheckInDate,
+      checkOut: newCheckOutDate,
       roomNum: hotel.roomNum,
     );
     final index = _trips.indexWhere((t) => t == trip);

@@ -1,23 +1,3 @@
-// import 'package:flutter/material.dart';
-//
-//
-// import 'forms.dart';
-// void main() {
-//   runApp(const TravelApp());
-// }
-//
-// class TravelApp extends StatelessWidget {
-//   const TravelApp({super.key, this.startTime});
-//   final DateTime? startTime;
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Travel App',
-//       home:Forms()
-//     );
-//   }
-// }
 
 //  Main written by Plamedi
 // It includes the trip registration feature.
@@ -29,9 +9,6 @@ import 'TripProvidertest.dart';
 import 'trip_list.dart';
 import 'forms.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
 void main() {
   runApp(const MyApp());
 }
@@ -69,7 +46,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 

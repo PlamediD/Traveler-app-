@@ -1,9 +1,8 @@
 
-import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
-import 'object_models.dart';
-import 'TripProvidertest.dart';
+import 'package:travel_app/TripProvidertest.dart';
+import 'package:travel_app/object_models.dart';
 
 class ModifyDialog extends StatefulWidget {
   final Trip trip;
