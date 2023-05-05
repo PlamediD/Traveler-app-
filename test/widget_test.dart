@@ -7,6 +7,7 @@
 // 4.30.2023: Outlined proper tests for Milestone 1.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travel_app/main.dart';
 
