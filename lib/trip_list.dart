@@ -4,6 +4,7 @@ import 'TripProvidertest.dart';
 import 'object_models.dart';
 import 'package:intl/intl.dart';
 import 'ModifyDialog.dart';
+import 'budget_tracker.dart';
 
 
 class TripList extends StatelessWidget {
@@ -40,6 +41,12 @@ class TripList extends StatelessWidget {
               ),
 
               IconButton(
+                onPressed: () {
+                  _navigateToBudgetTrackingScreen(context, trip);
+                },
+                icon: Icon(Icons.attach_money), // Add the budget icon here
+              ),
+              IconButton(
                 onPressed: (){ tripProvider.removeTrip(index);},
                 icon: const Icon(Icons.delete_forever),
               )
@@ -66,7 +73,7 @@ class TripList extends StatelessWidget {
               children: [
                 Text('Start Date: $startDateFormatted'),
                 Text('End Date: $endDateFormatted'),
-                Text('Budget: ${trip.budget}'),
+                Text('Budget: ${trip.budget} dollars'),
                 Text('Flight:'),
                 Text(' - Departure: ${trip.flight.departure}'),
                 Text(' - Arrival: ${trip.flight.arrival}'),
@@ -99,32 +106,14 @@ class TripList extends StatelessWidget {
     );
   }
 
-}
-// This was for testing purposes
-// class TripCard extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final tripProvider = Provider.of<TripProvider>(context);
-//     final trips = tripProvider.trips;
-//
-//     return ListView.builder(
-//       itemCount: trips.length,
-//       itemBuilder: (BuildContext context, int index) {
-//         return Card(
-//           child: Column(
-//             children: [
-//               Text(trips[index].destination),
-//               Text(trips[index].start.toString()),
-//               Text(trips[index].end.toString()),
-//               Text(trips[index].flight.departure),
-//               Text(trips[index].flight.arrival),
-//               Text(trips[index].flight.flightNum),
-//               Text(trips[index].hotel.roomNum.toString()),
-//               Text(trips[index].budget.toString()),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
+
+  void _navigateToBudgetTrackingScreen(BuildContext context, Trip trip) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BudgetTrackingScreen(trip: trip),
+      ),
+    );
+  }
+
+}          
