@@ -13,3 +13,5 @@ Milestone 1: The goal is to finish the trip registration feature. At the end of 
 Users can add trips by filling out date/time for several categories, including separate data types like Flight and Hotel. Most of the flow has been tested and works properly. Submitting data correctly prints the information as a tile.
 
 NOTE: Casey worked with Henry (Haonan) on testing, so any committs he submitted were from both of them.
+
+## Milestone 2
