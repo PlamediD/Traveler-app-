@@ -1,92 +1,174 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'TripProvidertest.dart';
 import 'object_models.dart';
-import 'trip_list.dart';
 
-class BudgetTrackingScreen extends StatelessWidget {
-  final Trip trip;
 
-  BudgetTrackingScreen({required this.trip});
+class BudgetTracker extends StatefulWidget {
+  final Trip selectedTrip;
+
+  BudgetTracker({required this.selectedTrip});
+
+  @override
+  _BudgetTrackerState createState() => _BudgetTrackerState();
+}
+
+class _BudgetTrackerState extends State<BudgetTracker> {
+  TextEditingController _expenseCategoryController = TextEditingController();
+  TextEditingController _expenseAmountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _expenseCategoryController.dispose();
+    _expenseAmountController.dispose();
+    super.dispose();
+  }
+
+  void removeExpense(Expense expense) {
+    widget.selectedTrip.expenses?.remove(expense);
+    context.read<TripProvider>().notifyListeners();
+  }
+
+  void modifyExpense(Expense expense, int newAmount) {
+    expense.amount = newAmount;
+    context.read<TripProvider>().notifyListeners();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final totalExpenses = trip.getTotalExpenses();
-    final remainingBudget = trip.getRemainingBudget();
+    final tripProvider = context.watch<TripProvider>();
+
+    int remainingBudget = tripProvider.getRemainingBudget(widget.selectedTrip);
+    int originalBudget = widget.selectedTrip.budget;
+    List<Expense> expenses = tripProvider.getAllExpenses(widget.selectedTrip);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Budget Tracking'),
+        title: Text('Budget Tracker'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Total Expenses: $totalExpenses',
-              style: TextStyle(fontSize: 16),
-            ),
-            Text(
-              'Remaining Budget: $remainingBudget',
-              style: TextStyle(fontSize: 16),
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                _showAddExpenseDialog(context);
-              },
-              icon: Icon(Icons.add),
-              label: Text('Add expense'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showAddExpenseDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String category = '';
-        int amount = 0;
-
-        return AlertDialog(
-          title: Text('Add Expense'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'Category'),
-                onChanged: (value) {
-                  category = value;
+              Text(
+                'Expenses',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.0),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: expenses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final expense = expenses[index];
+                  return ListTile(
+                    title: Text(expense.category),
+                    subtitle: Text('Amount: ${expense.amount}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                TextEditingController controller =
+                                TextEditingController(text: expense.amount.toString());
+                                return AlertDialog(
+                                  title: Text('Modify Expense'),
+                                  content: TextField(
+                                    controller: controller,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      labelText: 'Amount',
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        int newAmount = int.tryParse(controller.text) ?? 0;
+                                        if (newAmount > 0) {
+                                          modifyExpense(expense, newAmount);
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                      child: Text('Save'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            removeExpense(expense);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
+              SizedBox(height: 16.0),
+              Text(
+                'Original Budget: ',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text('    ~$originalBudget dollars', style: TextStyle(fontSize: 18)),
+              Text(
+                'Remaining Budget:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text('    ~$remainingBudget dollars', style: TextStyle(fontSize: 18, color: Colors.red)),
+              SizedBox(height: 16.0),
+              Text(
+                'Register New Expense',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.0),
               TextField(
-                decoration: InputDecoration(labelText: 'Amount'),
-                onChanged: (value) {
-                  amount = int.tryParse(value) ?? 0;
+                controller: _expenseCategoryController,
+                decoration: InputDecoration(
+                  labelText: 'Category',
+                ),
+              ),
+              SizedBox(height: 8.0),
+              TextField(
+                controller: _expenseAmountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Amount',
+                ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  String category = _expenseCategoryController.text;
+                  int amount = int.tryParse(_expenseAmountController.text) ?? 0;
+
+                  if (category.isNotEmpty && amount > 0) {
+                    tripProvider.addExpense(widget.selectedTrip, category, amount);
+                    _expenseCategoryController.clear();
+                    _expenseAmountController.clear();
+                  }
                 },
+                child: Text('Add Expense'),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                trip.addExpense(category, amount);
-
-                Navigator.of(context).pop();
-              },
-              child: Text('Add'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
