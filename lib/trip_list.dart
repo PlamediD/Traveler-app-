@@ -40,11 +40,12 @@ class TripList extends StatelessWidget {
                 icon: Icon(Icons.edit),
               ),
 
+
               IconButton(
                 onPressed: () {
-                  _navigateToBudgetTrackingScreen(context, trip);
+                  _showBudgetTracker(context, trip);
                 },
-                icon: Icon(Icons.attach_money), // Add the budget icon here
+                icon: Icon(Icons.account_balance_wallet),
               ),
               IconButton(
                 onPressed: (){ tripProvider.removeTrip(index);},
@@ -107,13 +108,16 @@ class TripList extends StatelessWidget {
   }
 
 
-  void _navigateToBudgetTrackingScreen(BuildContext context, Trip trip) {
+  void _showBudgetTracker(BuildContext context, Trip trip) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => BudgetTrackingScreen(trip: trip),
+        builder: (context) => BudgetTracker(selectedTrip: trip),
       ),
     );
   }
+
+
+
 
 }          
