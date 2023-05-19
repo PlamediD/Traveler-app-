@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'object_models.dart';
 import 'package:provider/provider.dart';
+import 'budget_tracker.dart';
 
-class TripProvider with ChangeNotifier {
+class TripProvider extends ChangeNotifier {
   final List<Trip> _trips = [];
 
   List<Trip> get trips => _trips;
+  final List <Expense>_expenses=[];
+  List <Expense> get expenses=>_expenses;
 
   void addTrip(Trip newTrip, {
     required DateTime start,
@@ -53,5 +56,46 @@ class TripProvider with ChangeNotifier {
   }
 
   int get tripsLength => _trips.length;
+
+
+  void addExpense(Trip trip, String category, int amount) {
+    final expense = Expense(category: category, amount: amount);
+    trip.expenses ??= [];
+    trip.expenses!.add(expense);
+    notifyListeners();
+  }
+  void removeExpense(Trip trip, String category, int amount) {
+    final expense = Expense(category: category, amount: amount);
+    trip.expenses ??= [];
+    trip.expenses!.remove(expense);
+    notifyListeners();
+  }
+
+  void modifyExpense(Trip trip, String category, int newAmount) {
+    if (trip.expenses != null) {
+      for (int i = 0; i < trip.expenses!.length; i++) {
+        if (trip.expenses![i].category == category) {
+          trip.expenses![i].amount = newAmount;
+          break;
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+
+  int getRemainingBudget(Trip trip) {
+    int totalExpenses = 0;
+    trip.expenses?.forEach((expense) {
+      totalExpenses += expense.amount;
+    });
+
+    return trip.budget - totalExpenses;
+  }
+
+  List<Expense> getAllExpenses(Trip trip) {
+    return trip.expenses ?? [];
+  }
+
 
 }
