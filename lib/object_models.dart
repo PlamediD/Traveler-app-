@@ -19,28 +19,7 @@ class Trip with ChangeNotifier{
     this.expenses ,
   });
 
-  void addExpense(String category, int amount) {
-    final expense = Expense(category: category, amount: amount);
-    expenses ??= []; // Initialize the list if it's null
-    expenses!.add(expense);
-    notifyListeners();
 
-  }
-
-
-  int getTotalExpenses() {
-    if (expenses == null) {
-      return 0;
-    }
-
-    return expenses!.fold(0, (sum, expense) => sum + expense.amount);
-  }
-
-  int getRemainingBudget() {
-
-    return budget - getTotalExpenses();
-
-  }
 
 }
 
