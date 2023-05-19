@@ -53,7 +53,8 @@ main(){
           flight: goodFlight,
           hotel: goodHotel,
           budget: 500);
-      expect(goodTrip.hotel, 21);
+      expect(goodTrip.hotel.roomNum, 21);
+    });
       test('destination should be set correctly', () {
         final goodFlight = Flight(
             arrival: "2023-01-01", departure: "2023-01-07",
@@ -68,7 +69,6 @@ main(){
             hotel: goodHotel,
             budget: 500);
         expect(goodTrip.destination, 'Hawaii');
-      });
     });
     test('flight should be set correctly', () {
       final goodFlight = Flight(arrival: "2023-01-01", departure: "2023-01-07",
@@ -82,7 +82,7 @@ main(){
           flight: goodFlight,
           hotel: goodHotel,
           budget: 500);
-      expect(goodTrip.flight, "Waystar Royco 34");
+      expect(goodTrip.flight.flightNum, "Waystar Royco 34");
     });
   });
 }
