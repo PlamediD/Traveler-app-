@@ -9,7 +9,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:travel_app/TripProvidertest.dart';
+import 'package:travel_app/budget_tracker.dart';
 import 'package:travel_app/main.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app/object_models.dart';
+
 
 main(){
   // TEST: Ensure that the app loads properly.
