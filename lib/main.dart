@@ -28,6 +28,13 @@ import 'package:provider/provider.dart';
 import 'TripProvidertest.dart';
 import 'trip_list.dart';
 import 'forms.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app/views/weather_view.dart';
+import 'TripProvidertest.dart';
+import 'trip_list.dart';
+import 'forms.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -42,7 +49,9 @@ final router = GoRouter(
     GoRoute(
       path: '/home',
       name: 'home',
-      builder: (context, _) => MyHomePage(title: 'Trip Planner',),
+      builder: (context, _) => MyHomePage(
+        title: 'Trip Planner',
+      ),
     )
   ],
 );
@@ -78,7 +87,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   void _addTrip() {
     Navigator.push(
       context,
@@ -93,8 +101,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Center(
-        child: TripList(),
+      //Make Changes here to add your own widgets
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const WeatherView(),
+          const SizedBox(
+            height: 10,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(14.0),
+            child: Text(
+              "Trips",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Expanded(child: TripList())
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTrip,
@@ -104,4 +131,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

@@ -7,7 +7,6 @@
 // 4.30.2023: Outlined proper tests for Milestone 1.
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travel_app/TripProvidertest.dart';
 import 'package:travel_app/budget_tracker.dart';
@@ -127,4 +126,20 @@ main(){
          expect(find.text("Flight Info:"), findsOneWidget);
          expect(find.text("Hotel Info:"), findsOneWidget);
        });
+
+   //Testing Search widget and weather widgets
+   testWidgets("Search Widget Added", (WidgetTester tester) async {
+     await tester.pumpWidget(const MaterialApp(home: Scaffold(body: MyApp())));
+     expect(find.text("Location"), findsOneWidget);
+   });
+
+   testWidgets("Getting Weather Data for a location", (tester) async {
+     await tester.pumpWidget(const MaterialApp(home: Scaffold(body: MyApp())));
+     expect(find.text("Location"), findsOneWidget);
+     final searchWidget = find.byKey(const ValueKey("searchWidget"));
+     final searchIconButton = find.byKey(const ValueKey("searchIconButton"));
+     await tester.enterText(searchWidget, "China");
+     await tester.tap(searchIconButton);
+     await tester.pumpAndSettle();
+   });
 }
