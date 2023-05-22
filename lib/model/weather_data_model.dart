@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
-import 'package:travel_app/classes/weather_data.dart';
-import 'package:travel_app/services/weather_api.dart';
+import 'classes/weather_data.dart';
+import 'services/weather_api.dart';
 import 'package:flutter/material.dart';
 
 class WeatherDataModel extends ChangeNotifier {
