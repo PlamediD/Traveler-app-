@@ -1,27 +1,4 @@
-// import 'package:flutter/material.dart';
-//
-//
-// import 'forms.dart';
-// void main() {
-//   runApp(const TravelApp());
-// }
-//
-// class TravelApp extends StatelessWidget {
-//   const TravelApp({super.key, this.startTime});
-//   final DateTime? startTime;
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Travel App',
-//       home:Forms()
-//     );
-//   }
-// }
 
-//  Main written by Plamedi
-// It includes the trip registration feature.
-// It has a little + icon on the bottom right that they user can click to register a new trip.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -31,14 +8,12 @@ import 'forms.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/views/weather_view.dart';
+import 'views/weather_view.dart';
 import 'TripProvidertest.dart';
 import 'trip_list.dart';
 import 'forms.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
+
 void main() {
   runApp(const MyApp());
 }
