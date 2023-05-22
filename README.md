@@ -21,8 +21,9 @@ user experience. Incorporate budgeting feature where users can add and track
 expenses for their trip. Integrate with a weather API to display weather conditions
 for the user's selected location
 
-![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/8974495e-9530-454b-8d9a-8149e1c48832) 
+![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/8974495e-9530-454b-8d9a-8149e1c48832) ![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/101df443-2afa-460f-b7ff-787f428d3b8e)
+
 
 Users can now set a budget for their trip. Testing was added for this functionality, and there is also a weather API.
 
-![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/019fda2d-accf-4731-ba56-e7651d45a2bb)
+
