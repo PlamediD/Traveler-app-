@@ -15,7 +15,12 @@ Users can add trips by filling out date/time for several categories, including s
 NOTE: Casey worked with Henry (Haonan) on testing, so any committs he submitted were from both of them.
 
 ## Milestone 2
+
 The goal is to finish the weather & budget feature, we could test our
 user experience. Incorporate budgeting feature where users can add and track
 expenses for their trip. Integrate with a weather API to display weather conditions
 for the user's selected location
+
+![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/8974495e-9530-454b-8d9a-8149e1c48832)
+
+Users can now set a budget for their trip. Testing was added for this functionality, and there is also a weather API.
