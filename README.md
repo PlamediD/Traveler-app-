@@ -24,6 +24,4 @@ for the user's selected location
 ![image](https://github.com/PlamediD/Traveler-app-/assets/83699098/8974495e-9530-454b-8d9a-8149e1c48832)
 
 
-Users can now set a budget for their trip. Testing was added for this functionality, and there is also a weather API.
-
-
+Users can now set a budget for their trip. Testing was added for this functionality, and there is also a weather API. Tests have been provided for the new functionality.
