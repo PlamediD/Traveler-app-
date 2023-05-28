@@ -1,23 +1,63 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'object_models.dart';
-import 'package:provider/provider.dart';
-import 'budget_tracker.dart';
+import 'firebase.dart';
+
 
 class TripProvider extends ChangeNotifier {
-  final List<Trip> _trips = [];
+  late List<Trip> _trips = [];
+  late List<Expense> _expenses = [];
+
+
+
 
   List<Trip> get trips => _trips;
-  final List <Expense>_expenses=[];
-  List <Expense> get expenses=>_expenses;
+  List<Expense> get expenses => _expenses;
 
-  void addTrip(Trip newTrip, {
-    required DateTime start,
-    required DateTime end,
-    required String destination,
-    required Flight flight,
-    required Hotel hotel,
-    required int budget,
-  }) {
+
+
+
+  final FirebaseService _firebaseService = FirebaseService();
+  TripProvider(){
+    _trips=[];
+    _expenses=[];
+
+    fetchTrips();
+
+  }
+
+
+  Future<void> fetchTrips() async {
+    try {
+      List<Trip> fetchedTrips = await _firebaseService.getTrips();
+      _trips.clear();
+      _trips.addAll(fetchedTrips);
+      notifyListeners();
+    } catch (error) {
+      // Handle error, such as showing an error message
+      print('Error fetching trips: $error');
+    }
+  }
+
+  List<Packing_List> getPackingList(int index) {
+    if (index >= 0 && index < _trips.length) {
+
+      return _trips[index].packing_list ?? [];
+    }
+    else {
+      throw Exception('Invalid trip index');
+    }
+  }
+  void addTrip(
+      Trip newTrip, {
+        required DateTime start,
+        required DateTime end,
+        required String destination,
+        required Flight flight,
+        required Hotel hotel,
+        required int budget,
+      }) async {
     final trip = Trip(
       start: start,
       end: end,
@@ -26,23 +66,52 @@ class TripProvider extends ChangeNotifier {
       hotel: hotel,
       budget: budget,
     );
-    _trips.add(trip);
-    notifyListeners();
+
+    try {
+      await _firebaseService.addTrip(trip);
+
+      // Fetch the updated list of trips from Firebase
+      List<Trip> fetchedTrips = await _firebaseService.getTrips();
+
+      // Update the local _trips list with the fetched trips
+      _trips.clear();
+      _trips.addAll(fetchedTrips);
+      notifyListeners();
+    } catch (error) {
+      // Handle error, such as showing an error message
+      print('Error adding trip: $error');
+    }
+  }
+
+  Trip getTripByIndex(int index) {
+    if (index >= 0 && index < _trips.length) {
+      final trip = _trips[index];
+
+
+      return trip;
+    } else {
+      throw Exception('Invalid trip index');
+    }
   }
 
   void removeTrip(int index){
+    _firebaseService.deleteTrip(getTripByIndex(index));
     _trips.removeAt(index);
     notifyListeners();
   }
-  void modifyHotel(Trip trip, DateTime newCheckInDate, DateTime newCheckOutDate) {
-    final hotel = trip.hotel;
-    final newHotel = Hotel(
-      checkIn: newCheckInDate,
-      checkOut: newCheckOutDate,
-      roomNum: hotel.roomNum,
-    );
+
+
+  void modifyHotel(Trip trip, DateTime newCheckInDate, DateTime newCheckOutDate) async {
+    await _firebaseService.modifyHotel(trip, newCheckInDate, newCheckOutDate);
+
     final index = _trips.indexWhere((t) => t == trip);
     if (index >= 0) {
+      final newHotel = Hotel(
+        checkIn: newCheckInDate,
+        checkOut: newCheckOutDate,
+        roomNum: trip.hotel.roomNum,
+      );
+
       _trips[index] = Trip(
         start: trip.start,
         end: trip.end,
@@ -50,38 +119,42 @@ class TripProvider extends ChangeNotifier {
         flight: trip.flight,
         hotel: newHotel,
         budget: trip.budget,
+        expenses: trip.expenses,
+
       );
       notifyListeners();
     }
   }
 
+
   int get tripsLength => _trips.length;
 
-
-  void addExpense(Trip trip, String category, int amount) {
+  void addExpense(Trip trip, String category, int amount) async {
     final expense = Expense(category: category, amount: amount);
     trip.expenses ??= [];
     trip.expenses!.add(expense);
-    notifyListeners();
-  }
-  void removeExpense(Trip trip, String category, int amount) {
-    final expense = Expense(category: category, amount: amount);
-    trip.expenses ??= [];
-    trip.expenses!.remove(expense);
+
+    await _firebaseService.updateTrip(trip); // Update the trip in Firebase
+
     notifyListeners();
   }
 
   void modifyExpense(Trip trip, String category, int newAmount) {
-    if (trip.expenses != null) {
-      for (int i = 0; i < trip.expenses!.length; i++) {
-        if (trip.expenses![i].category == category) {
-          trip.expenses![i].amount = newAmount;
-          break;
-        }
-      }
+    final expense = trip.expenses?.firstWhere((expense) => expense.category == category);
+    if (expense != null) {
+      expense.amount = newAmount;
+      _firebaseService.updateTrip(trip); // Update the trip in Firebase
       notifyListeners();
     }
   }
+
+
+  void removeExpense(Trip trip, String category) {
+    trip.expenses?.removeWhere((expense) => expense.category == category);
+    _firebaseService.updateTrip(trip); // Update the trip in Firebase
+    notifyListeners();
+  }
+
 
 
   int getRemainingBudget(Trip trip) {
@@ -97,5 +170,28 @@ class TripProvider extends ChangeNotifier {
     return trip.expenses ?? [];
   }
 
+
+  void updatePackingItem(Trip trip, int index, bool isPacked) async {
+    await _firebaseService.updatePackingItem(trip, index, isPacked);
+
+    final tripIndex = _trips.indexWhere((t) => t == trip);
+    if (tripIndex >= 0) {
+      final packingList = getPackingList(tripIndex);
+      if (index >= 0 && index < packingList.length) {
+        packingList[index].isPacked = isPacked;
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<void> addPackingListItem(int tripIndex, String itemToPack) async {
+    if (tripIndex >= 0 && tripIndex < _trips.length) {
+      final trip = _trips[tripIndex];
+      await _firebaseService.addPackingListItem(trip, itemToPack);
+      notifyListeners();
+    } else {
+      throw Exception('Invalid trip index');
+    }
+  }
 
 }
