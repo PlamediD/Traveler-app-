@@ -25,14 +25,14 @@ class _BudgetTrackerState extends State<BudgetTracker> {
   }
 
   void removeExpense(Expense expense) {
-    widget.selectedTrip.expenses?.remove(expense);
-    context.read<TripProvider>().notifyListeners();
+    context.read<TripProvider>().removeExpense(widget.selectedTrip, expense.category);
+
   }
 
   void modifyExpense(Expense expense, int newAmount) {
-    expense.amount = newAmount;
-    context.read<TripProvider>().notifyListeners();
+    context.read<TripProvider>().modifyExpense(widget.selectedTrip, expense.category, newAmount);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,8 @@ class _BudgetTrackerState extends State<BudgetTracker> {
     int remainingBudget = tripProvider.getRemainingBudget(widget.selectedTrip);
     int originalBudget = widget.selectedTrip.budget;
     List<Expense> expenses = tripProvider.getAllExpenses(widget.selectedTrip);
+
+
 
     return Scaffold(
       appBar: AppBar(
