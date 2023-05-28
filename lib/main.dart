@@ -5,16 +5,22 @@ import 'package:provider/provider.dart';
 import 'TripProvidertest.dart';
 import 'trip_list.dart';
 import 'forms.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'views/weather_view.dart';
-import 'TripProvidertest.dart';
-import 'trip_list.dart';
-import 'forms.dart';
+import 'firebase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-void main() {
+// void main() {
+//   runApp(MyApp());
+// }
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  //final collectionReference = FirebaseFirestore.instance.collection('events');
+
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -106,3 +112,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
