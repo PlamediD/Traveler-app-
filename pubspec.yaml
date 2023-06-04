@@ -43,6 +43,7 @@ dependencies:
   weather: ^2.0.1
   http: ^0.13.6
   geocoding: ^2.1.0
+  google_maps_flutter:
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'model/weather_data_model.dart';
+import '../model/weather_data_model.dart';
 import 'package:provider/provider.dart';
 
 class SearchWidget extends StatelessWidget {
