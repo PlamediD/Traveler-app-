@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "162823306526",
+    "project_id": "travel-scheduler-app",
+    "storage_bucket": "travel-scheduler-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162823306526:android:526ed64a336aa2dab91d0f",
+        "android_client_info": {
+          "package_name": "com.example.travel_scheduler_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162823306526-6ed7lu0uepdqig1ptv2t0nkj1f23vgnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtla8xVO3DQz5oTgWYKCgC46PMd8ABvfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162823306526-6ed7lu0uepdqig1ptv2t0nkj1f23vgnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
