@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app/widgets/maps_widget.dart';
 import 'TripProvidertest.dart';
 import 'object_models.dart';
 import 'package:intl/intl.dart';
@@ -43,6 +44,17 @@ class TripList extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              /*
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MapPage()),
+                  );
+                },
+                icon: const Icon(Icons.pin_drop)
+              ),
+               */
               IconButton(
                   onPressed: () {
                     _showTripDetails(context, trip);
@@ -109,6 +121,7 @@ class TripList extends StatelessWidget {
                 Text(' - Check-in: $checkInFormatted'),
                 Text(' - Check-out: $checkOutFormatted'),
                 Text(' - Room Number: ${trip.hotel.roomNum}'),
+
 
 
 
@@ -186,4 +199,4 @@ class TripList extends StatelessWidget {
 
 
 
-}          
+}

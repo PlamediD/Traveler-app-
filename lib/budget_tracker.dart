@@ -42,8 +42,6 @@ class _BudgetTrackerState extends State<BudgetTracker> {
     int originalBudget = widget.selectedTrip.budget;
     List<Expense> expenses = tripProvider.getAllExpenses(widget.selectedTrip);
 
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Budget Tracker'),

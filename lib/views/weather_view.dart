@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'widgets/search_widget.dart';
-import 'widgets/weather_data_widget.dart';
-import 'model/weather_data_model.dart';
+import '../widgets/search_widget.dart';
+import '../widgets/weather_data_widget.dart';
+import '../model/weather_data_model.dart';
 
 class WeatherView extends StatefulWidget {
   const WeatherView({super.key});

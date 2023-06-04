@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'classes/weather_data.dart';
-import 'model/weather_data_model.dart';
+import '../classes/weather_data.dart';
+import '../model/weather_data_model.dart';
 import 'dart:math';
 
 class WeatherDataView extends StatefulWidget {
