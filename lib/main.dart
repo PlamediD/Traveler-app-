@@ -89,9 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const WeatherView(),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10,),
           const Padding(
             padding: EdgeInsets.all(14.0),
             child: Text(
@@ -99,10 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Expanded(child: TripList())
+          const SizedBox(height: 5,),
+          Expanded(child: TripList()),
+          const SizedBox(height: 5,),
+          // Expanded(child: DirectionsWidget())
         ],
       ),
       floatingActionButton: FloatingActionButton(

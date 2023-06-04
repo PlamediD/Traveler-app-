@@ -121,11 +121,6 @@ class TripList extends StatelessWidget {
                 Text(' - Check-in: $checkInFormatted'),
                 Text(' - Check-out: $checkOutFormatted'),
                 Text(' - Room Number: ${trip.hotel.roomNum}'),
-
-
-
-
-
               ],
             ),
           ),
@@ -135,6 +130,18 @@ class TripList extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: Text('Close'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DirectionsWidget(),
+                  ),
+                );
+              },
+              child: Text('Show Directions'),
             ),
           ],
         );
@@ -196,7 +203,4 @@ class TripList extends StatelessWidget {
       ),
     );
   }
-
-
-
 }
