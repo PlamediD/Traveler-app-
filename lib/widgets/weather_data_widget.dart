@@ -46,14 +46,6 @@ class _WeatherDataViewState extends State<WeatherDataView> {
                           const SizedBox(
                             width: 2,
                           ),
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Image(
-                                image: AssetImage(
-                                    "assets/weatherIcons/${weatherData.dayOrNight}/${weatherData.iconName}.png"),
-                                fit: BoxFit.fitWidth),
-                          )
                         ]),
                         Text("feels like ${weatherData.feelsLikeTemp}\u00B0C",
                             style: TextStyle(fontSize: 16))
