@@ -29,5 +29,7 @@ Users can now set a budget for their trip. Testing was added for this functional
 ## Milestone 3
 Implement maps and directions to help users navigate to their
 destination improve app performance, security, and overall user experience. Additionally, add a 'to pack ' feature that allows the user to have a list of items that they need to pack for the specific trip and mark wheter or not htey have already packed it. 
+Finally, the app is now using firebase for data storage. 
 Test user experience
+
 
