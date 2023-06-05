@@ -6,7 +6,7 @@ Team Members: Richard Ty, Plamedi Diakubama, Haonan Wang, Casey Nguyen
 
 ## Milestone 1
 
-Milestone 1: The goal is to finish the trip registration feature. At the end of it, we need the user to be able to enter all required information about the trip and the app to be able to display it.
+The goal is to finish the trip registration feature. At the end of it, we need the user to be able to enter all required information about the trip and the app to be able to display it.
 
 ![image](https://user-images.githubusercontent.com/83699098/235417343-f00409be-3ae8-49ce-9f98-43bca4508d8e.png)
 
@@ -25,3 +25,9 @@ for the user's selected location
 
 
 Users can now set a budget for their trip. Testing was added for this functionality, and there is also a weather API. Tests have been provided for the new functionality.
+
+## Milestone 3
+Implement maps and directions to help users navigate to their
+destination improve app performance, security, and overall user experience. Additionally, add a 'to pack ' feature that allows the user to have a list of items that they need to pack for the specific trip and mark wheter or not htey have already packed it. 
+Test user experience
+
